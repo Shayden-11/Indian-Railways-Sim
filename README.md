@@ -3,7 +3,7 @@
 A high-fidelity, web-based train simulation featuring iconic Indian locomotives and realistic driving mechanics. This project aims to bring an authentic loco-pilot experience to the browser.
 
 ## 🚀 Live Demo
-**[[Insert Your Netlify or GitHub Link Here]](https://github.com/Shayden-11/Indian-Rwailways-Sim.git)**
+**(https://github.com/Shayden-11/Indian-Rwailways-Sim.git)**
 
 ---
 
