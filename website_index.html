@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Railways Sim — Drive the Iron Road</title>
+    <link rel="stylesheet" href="website_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Tiro+Devanagari+Hindi&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ══ NOISE OVERLAY ══ -->
+<div class="noise"></div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+    <div class="nav-logo">
+        <span class="logo-ir">IR</span>
+        <span class="logo-text">Indian Railways Sim</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#routes">Routes</a></li>
+        <li><a href="#trains">Trains</a></li>
+        <li><a href="game.html" class="nav-play">▶ Play Now</a></li>
+    </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+    <div class="hero-track-lines">
+        <div class="track-line"></div>
+        <div class="track-line"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge">2D TRAIN SIMULATOR</div>
+        <h1 class="hero-title">
+            <span class="title-hindi">भारतीय रेल</span>
+            <span class="title-en">Indian Railways</span>
+            <span class="title-sub">Simulator</span>
+        </h1>
+        <p class="hero-desc">
+            Command a WAP-7 or WAP-5 locomotive across India's iconic rail network. 
+            Master realistic signalling, navigate the Bhor Ghat, and build your own consist.
+        </p>
+        <div class="hero-cta">
+            <a href="game.html" class="btn-primary">
+                <span class="btn-icon">🚂</span>
+                <span>Launch Simulator</span>
+            </a>
+            <a href="#features" class="btn-secondary">See Features</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-n">2</span><span class="stat-l">Routes</span></div>
+            <div class="stat-div"></div>
+            <div class="stat"><span class="stat-n">3+</span><span class="stat-l">Locomotives</span></div>
+            <div class="stat-div"></div>
+            <div class="stat"><span class="stat-n">24</span><span class="stat-l">Coach Types</span></div>
+            <div class="stat-div"></div>
+            <div class="stat"><span class="stat-n">IR</span><span class="stat-l">Signalling</span></div>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="train-illustration">
+            <div class="loco-block">WAP-7</div>
+            <div class="coach-block lhb">LHB</div>
+            <div class="coach-block lhb">LHB</div>
+            <div class="coach-block vista">Vista</div>
+            <div class="coach-block lhb">LHB</div>
+            <div class="coach-block eog">EOG</div>
+        </div>
+        <div class="track-visual">
+            <div class="rail r1"></div>
+            <div class="rail r2"></div>
+            <div class="sleepers">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <!-- Signal post -->
+        <div class="signal-post">
+            <div class="signal-pole"></div>
+            <div class="signal-box">
+                <div class="lens red active"></div>
+                <div class="lens yellow"></div>
+                <div class="lens green"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span>MUMBAI CENTRAL → SURAT → VADODARA → RATLAM → KOTA JN → NEW DELHI</span>
+        <span>⬥</span>
+        <span>MUMBAI CST → THANE → KALYAN JN → KARJAT → LONAVALA → PUNE JN</span>
+        <span>⬥</span>
+        <span>COIMBATORE JN → ERODE JN → SALEM JN → JOLARPETTAI → KATPADI JN → CHENNAI CENTRAL</span>
+        <span>⬥</span>
+        <span>WAP-7 · WAP-5 · LHB COACHES · VISTADOME · CUSTOM CONSISTS</span>
+        <span>⬥</span>
+        <span>ABSOLUTE BLOCK SIGNALLING · BHOR GHAT SECTION · NPC TRAINS</span>
+        <span>⬥</span>
+        <span>MUMBAI CENTRAL → SURAT → VADODARA → RATLAM → KOTA JN → NEW DELHI</span>
+        <span>⬥</span>
+        <span>MUMBAI CST → THANE → KALYAN JN → KARJAT → LONAVALA → PUNE JN</span>
+        <span>⬥</span>
+        <span>COIMBATORE JN → ERODE JN → SALEM JN → JOLARPETTAI → KATPADI JN → CHENNAI CENTRAL</span>
+        <span>⬥</span>
+    </div>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<section class="features" id="features">
+    <div class="section-header">
+        <div class="section-tag">WHAT'S INSIDE</div>
+        <h2 class="section-title">Simulator Features</h2>
+    </div>
+    <div class="features-grid">
+        <div class="feat-card feat-large">
+            <div class="feat-icon">🚦</div>
+            <h3>Realistic IR Signalling</h3>
+            <p>Full absolute block working system with red, yellow, and green aspects. NPC trains occupy blocks, signals cascade in real-time. Advance caution boards warn you before a red signal.</p>
+            <div class="feat-tag">Block Signalling</div>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon">⛰️</div>
+            <h3>Bhor Ghat Section</h3>
+            <p>The iconic Mumbai–Pune ghat with 45 km/h speed restriction and mountain scenery.</p>
+            <div class="feat-tag">Mumbai–Pune</div>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon">🔧</div>
+            <h3>Consist Builder</h3>
+            <p>Mix LHB, Shatabdi, Vistadome coaches and EOGs. Apply custom rakes in real-time.</p>
+            <div class="feat-tag">Custom Train</div>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon">🚂</div>
+            <h3>NPC Traffic</h3>
+            <p>Opposite-direction expresses rush past you. Same-direction trains occupy blocks ahead.</p>
+            <div class="feat-tag">Live Traffic</div>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon">📻</div>
+            <h3>Guard Messages</h3>
+            <p>Realistic radio chatter from the guard — departure clearance and signal-clear calls.</p>
+            <div class="feat-tag">Immersion</div>
+        </div>
+        <div class="feat-card feat-large">
+            <div class="feat-icon">🎛️</div>
+            <h3>Cab Dashboard</h3>
+            <p>Speedometer with animated needle, brake pipe & cylinder gauges, throttle notch display, E/B warning light, headlights, and a real-time clock with day/night sky cycle.</p>
+            <div class="feat-tag">Full HUD</div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ ROUTES ══ -->
+<section class="routes" id="routes">
+    <div class="section-header">
+        <div class="section-tag">DESTINATIONS</div>
+        <h2 class="section-title">Routes</h2>
+    </div>
+    <div class="routes-grid routes-grid-3">
+        <div class="route-card">
+            <div class="route-map">
+                <div class="route-line nd"></div>
+                <div class="route-dots">
+                    <div class="rdot"><span>MUMBAI</span></div>
+                    <div class="rdot"><span>SURAT</span></div>
+                    <div class="rdot"><span>VADODARA</span></div>
+                    <div class="rdot"><span>RATLAM</span></div>
+                    <div class="rdot"><span>KOTA JN</span></div>
+                    <div class="rdot active"><span>NEW DELHI</span></div>
+                </div>
+            </div>
+            <div class="route-info">
+                <h3>Mumbai – New Delhi</h3>
+                <p>The classic Rajdhani Express corridor. Sprint across five states on the Western Railway main line.</p>
+                <div class="route-meta">
+                    <span>⏱ ~70,500m</span>
+                    <span>🚂 130–160 km/h</span>
+                </div>
+                <div class="route-badge">RANDOM START DIRECTION</div>
+            </div>
+        </div>
+        <div class="route-card ghat">
+            <div class="route-map">
+                <div class="route-line pune"></div>
+                <div class="route-dots">
+                    <div class="rdot"><span>MUMBAI CST</span></div>
+                    <div class="rdot"><span>THANE</span></div>
+                    <div class="rdot"><span>KALYAN JN</span></div>
+                    <div class="rdot ghat-start"><span>KARJAT ⛰️</span></div>
+                    <div class="rdot ghat-end"><span>LONAVALA</span></div>
+                    <div class="rdot active"><span>PUNE JN</span></div>
+                </div>
+            </div>
+            <div class="route-info">
+                <h3>Mumbai – Pune</h3>
+                <p>Tackle the legendary Bhor Ghat. Speed drops to 45 km/h as you climb through the Western Ghats.</p>
+                <div class="route-meta">
+                    <span>⛰️ Ghat Section</span>
+                    <span>🚂 45 km/h restricted</span>
+                </div>
+                <div class="route-badge">RANDOM START DIRECTION</div>
+            </div>
+        </div>
+        <div class="route-card cbe">
+            <div class="route-map">
+                <div class="route-line cbe-line"></div>
+                <div class="route-dots">
+                    <div class="rdot"><span>COIMBATORE JN</span></div>
+                    <div class="rdot"><span>ERODE JN</span></div>
+                    <div class="rdot"><span>SALEM JN</span></div>
+                    <div class="rdot"><span>JOLARPETTAI</span></div>
+                    <div class="rdot"><span>KATPADI JN</span></div>
+                    <div class="rdot active"><span>CHENNAI CENTRAL</span></div>
+                </div>
+            </div>
+            <div class="route-info">
+                <h3>Coimbatore – Chennai</h3>
+                <p>Sprint across Tamil Nadu on the Southern Railway main line through the heart of the state.</p>
+                <div class="route-meta">
+                    <span>⏱ ~60,000m</span>
+                    <span>🚂 130 km/h</span>
+                </div>
+                <div class="route-badge" style="color:#0E9F6E; border-color:rgba(14,159,110,0.3)">RANDOM START DIRECTION</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ TRAINS ══ -->
+<section class="trains" id="trains">
+    <div class="section-header">
+        <div class="section-tag">ROLLING STOCK</div>
+        <h2 class="section-title">Locomotives & Coaches</h2>
+    </div>
+
+    <!-- Tab buttons -->
+    <div class="catalogue-tabs">
+        <button class="cat-tab active" data-tab="locos">🚂 Locomotives</button>
+        <button class="cat-tab" data-tab="coaches">🟥 Coaches</button>
+        <button class="cat-tab" data-tab="eogs">⚡ EOG Cars</button>
+    </div>
+
+    <!-- ── LOCOMOTIVES ── -->
+    <div class="cat-panel active" id="tab-locos">
+        <div class="trains-grid">
+            <div class="loco-card">
+                <div class="sprite-viewer">
+                    <img src="assets/wap7.png" alt="WAP-7 Locomotive" class="sprite-img">
+                </div>
+                <div class="loco-badge">WAP-7</div>
+                <div class="loco-spec">
+                    <div class="spec"><span class="spec-l">Max Speed</span><span class="spec-v">130 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Power</span><span class="spec-v">6,000 HP</span></div>
+                    <div class="spec"><span class="spec-l">Traction</span><span class="spec-v">3-Phase AC</span></div>
+                    <div class="spec"><span class="spec-l">Built by</span><span class="spec-v">CLW, Chittaranjan</span></div>
+                </div>
+                <p class="loco-desc">The backbone of Indian express services. Equipped with 3-phase AC drive and regenerative braking, the WAP-7 hauls Rajdhani, Shatabdi, and Duronto expresses across the country at 130 km/h.</p>
+            </div>
+            <div class="loco-card">
+                <div class="sprite-viewer">
+                    <img src="assets/wap5.png" alt="WAP-5 Locomotive" class="sprite-img">
+                </div>
+                <div class="loco-badge wap5">WAP-5</div>
+                <div class="loco-spec">
+                    <div class="spec"><span class="spec-l">Max Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Power</span><span class="spec-v">5,400 HP</span></div>
+                    <div class="spec"><span class="spec-l">Traction</span><span class="spec-v">3-Phase AC</span></div>
+                    <div class="spec"><span class="spec-l">Built by</span><span class="spec-v">ABB / CLW</span></div>
+                </div>
+                <p class="loco-desc">India's fastest in-service passenger locomotive. Originally designed for Shatabdi Express, it can achieve 160 km/h and is used on premium services requiring high acceleration and top speed.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── COACHES ── -->
+    <div class="cat-panel" id="tab-coaches">
+        <div class="rolling-stock-grid">
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_red_ac3.png" alt="LHB Red AC3 Coach" class="sprite-img"
+                         onerror="this.src='assets/lhb.png'">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#c0392b"></div>
+                    <div>
+                        <div class="stock-name">LHB Red AC3 Coach</div>
+                        <div class="stock-sub">Linke Hofmann Busch · Air-Conditioned</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Rajdhani Red / Cream</span></div>
+                    <div class="spec"><span class="spec-l">Design Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Bogies</span><span class="spec-v">FIAT-SIG</span></div>
+                </div>
+                <p class="stock-desc">The standard air-conditioned coach used on premium express trains like Rajdhani Express. German-designed LHB technology provides a smooth, anti-telescoping ride at high speeds.</p>
+            </div>
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_blue.png" alt="LHB Executive Coach" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#1a5276"></div>
+                    <div>
+                        <div class="stock-name">LHB Executive</div>
+                        <div class="stock-sub">Linke Hofmann Busch · Executive Class</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Shatabdi Blue / Grey</span></div>
+                    <div class="spec"><span class="spec-l">Design Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Seating</span><span class="spec-v">Executive / Chair Car</span></div>
+                </div>
+                <p class="stock-desc">The premium chair-car used exclusively on Shatabdi Express services. Features wider seats, better legroom, and the characteristic blue and grey Shatabdi livery.</p>
+            </div>
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_blue_acc.png" alt="LHB Blue ACC Coach" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#1f618d"></div>
+                    <div>
+                        <div class="stock-name">LHB Blue ACC</div>
+                        <div class="stock-sub">Linke Hofmann Busch · AC Chair Car</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Shatabdi Blue / Grey</span></div>
+                    <div class="spec"><span class="spec-l">Design Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Class</span><span class="spec-v">AC Chair Car (CC)</span></div>
+                </div>
+                <p class="stock-desc">An air-conditioned chair car variant in Shatabdi blue livery. Used on daytime express services, offering comfortable reserved seating with air-conditioning at an accessible fare.</p>
+            </div>
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_deccanqueenvistadome.png" alt="Vistadome Coach" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#6a0dad"></div>
+                    <div>
+                        <div class="stock-name">Vistadome Coach</div>
+                        <div class="stock-sub">Deccan Queen · Panoramic Windows</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Deccan Queen · Silver/Blue</span></div>
+                    <div class="spec"><span class="spec-l">Feature</span><span class="spec-v">Glass roof & end windows</span></div>
+                    <div class="spec"><span class="spec-l">Route</span><span class="spec-v">Mumbai–Pune (Deccan Queen)</span></div>
+                </div>
+                <p class="stock-desc">A specially designed observation coach with a panoramic glass roof and large end-window for scenic viewing. Introduced on the iconic Deccan Queen running the Mumbai–Pune route.</p>
+            </div>
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_humsafar_ac3.png" alt="Humsafar AC3 Coach" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#6e2e0a"></div>
+                    <div>
+                        <div class="stock-name">Humsafar AC3</div>
+                        <div class="stock-sub">Linke Hofmann Busch · AC 3-Tier Sleeper</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Humsafar Maroon / Gold</span></div>
+                    <div class="spec"><span class="spec-l">Design Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Class</span><span class="spec-v">AC 3-Tier Sleeper (3A)</span></div>
+                </div>
+                <p class="stock-desc">A fully air-conditioned 3-tier sleeper coach introduced under the Humsafar Express brand. Features GPS-based passenger information, bio-vacuum toilets, and CCTV — offering a premium overnight travel experience.</p>
+            </div>
+            
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_shatabdi_grey_acc.png" alt="Shatabdi Grey ACC" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#7F8C8D"></div>
+                    <div>
+                        <div class="stock-name">Shatabdi Grey ACC</div>
+                        <div class="stock-sub">Linke Hofmann Busch · AC Chair Car</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Shatabdi Grey / Blue</span></div>
+                    <div class="spec"><span class="spec-l">Design Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Class</span><span class="spec-v">AC Chair Car (CC)</span></div>
+                </div>
+                <p class="stock-desc">An alternative modern grey livery for Shatabdi AC Chair Cars. Offers a sleek, updated look while maintaining the high-speed comfort of standard LHB daytime coaches.</p>
+            </div>
+
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/lhb_humsafar_pantry.png" alt="Humsafar Pantry Car" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#8A3A0B"></div>
+                    <div>
+                        <div class="stock-name">Humsafar Pantry</div>
+                        <div class="stock-sub">Linke Hofmann Busch · Hot Buffet Car</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Humsafar Maroon / Gold</span></div>
+                    <div class="spec"><span class="spec-l">Design Speed</span><span class="spec-v">160 km/h</span></div>
+                    <div class="spec"><span class="spec-l">Function</span><span class="spec-v">Onboard Catering</span></div>
+                </div>
+                <p class="stock-desc">The dedicated pantry car (PC) for Humsafar Express rakes. Finished in the matching maroon and gold livery, equipped with modern electrical cooking ranges for long-distance catering.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── EOGs ── -->
+    <div class="cat-panel" id="tab-eogs">
+        <div class="rolling-stock-grid">
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/eog.png" alt="EOG Red" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#8b0000"></div>
+                    <div>
+                        <div class="stock-name">EOG — Red (Rajdhani)</div>
+                        <div class="stock-sub">End-On Generation Car · Power Van</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Rajdhani Red / Cream</span></div>
+                    <div class="spec"><span class="spec-l">Function</span><span class="spec-v">Onboard power generation</span></div>
+                    <div class="spec"><span class="spec-l">Position</span><span class="spec-v">Both ends of rake</span></div>
+                </div>
+                <p class="stock-desc">The power van placed at both ends of a Rajdhani rake. Houses diesel generator sets that supply 750V AC electricity for air-conditioning and lighting to all coaches in the train.</p>
+            </div>
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/eog_blue.png" alt="EOG Blue" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#154360"></div>
+                    <div>
+                        <div class="stock-name">EOG — Blue (Shatabdi)</div>
+                        <div class="stock-sub">End-On Generation Car · Power Van</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Shatabdi Blue / Grey</span></div>
+                    <div class="spec"><span class="spec-l">Function</span><span class="spec-v">Onboard power generation</span></div>
+                    <div class="spec"><span class="spec-l">Position</span><span class="spec-v">Both ends of rake</span></div>
+                </div>
+                <p class="stock-desc">Identical in function to the red EOG but finished in the Shatabdi blue and grey livery. Positioned at each end of the Shatabdi rake, it provides uninterrupted power to all coaches during the journey.</p>
+            </div>
+
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/shatabdi_grey_eog.png" alt="Shatabdi Grey EOG" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#34495E"></div>
+                    <div>
+                        <div class="stock-name">EOG — Grey (Shatabdi)</div>
+                        <div class="stock-sub">End-On Generation Car · Power Van</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Shatabdi Grey / Blue</span></div>
+                    <div class="spec"><span class="spec-l">Function</span><span class="spec-v">Onboard power generation</span></div>
+                    <div class="spec"><span class="spec-l">Position</span><span class="spec-v">Both ends of rake</span></div>
+                </div>
+                <p class="stock-desc">A generator van painted to match the modern grey Shatabdi livery. Supplies 750V AC power to the entire rake, ensuring lighting and air conditioning run flawlessly at 160 km/h.</p>
+            </div>
+
+            <div class="stock-card">
+                <div class="sprite-viewer">
+                    <img src="assets/humsafar_eog.png" alt="Humsafar EOG" class="sprite-img">
+                </div>
+                <div class="stock-header">
+                    <div class="stock-swatch" style="background:#5C2608"></div>
+                    <div>
+                        <div class="stock-name">EOG — Humsafar</div>
+                        <div class="stock-sub">End-On Generation Car · Power Van</div>
+                    </div>
+                </div>
+                <div class="stock-specs">
+                    <div class="spec"><span class="spec-l">Livery</span><span class="spec-v">Humsafar Maroon / Gold</span></div>
+                    <div class="spec"><span class="spec-l">Function</span><span class="spec-v">Onboard power generation</span></div>
+                    <div class="spec"><span class="spec-l">Position</span><span class="spec-v">Both ends of rake</span></div>
+                </div>
+                <p class="stock-desc">The specialized End-On Generation car for Humsafar Express trains. Wrapped in the distinctive premium maroon livery, providing vital electrical hotel power for the fully AC 3-tier rake.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ CONTROLS ══ -->
+<section class="controls">
+    <div class="section-header">
+        <div class="section-tag">HOW TO DRIVE</div>
+        <h2 class="section-title">Controls</h2>
+    </div>
+    <div class="controls-grid">
+        <div class="ctrl"><kbd>↑</kbd><span>Increase Throttle</span></div>
+        <div class="ctrl"><kbd>↓</kbd><span>Decrease Throttle / Apply Brakes</span></div>
+        <div class="ctrl"><kbd>E</kbd><span>Emergency Brake</span></div>
+        <div class="ctrl"><kbd>SPACE</kbd><span>Dismiss Guard Message</span></div>
+        <div class="ctrl"><kbd>🖱 Right Drag</kbd><span>Pan Camera</span></div>
+        <div class="ctrl"><kbd>≡ Menu</kbd><span>Change Route / Train</span></div>
+    </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2>Ready to drive?</h2>
+        <p>No downloads. No installs. Drive straight from your browser.</p>
+        <a href="game.html" class="btn-primary large">
+            <span class="btn-icon">🚂</span>
+            <span>Launch Simulator</span>
+        </a>
+    </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">
+            <span class="logo-ir">IR</span>
+            <span>Indian Railways Sim</span>
+        </div>
+        <p class="footer-note">A fan-made simulator. Not affiliated with Indian Railways.</p>
+        <p class="footer-tech">Built with Phaser 3 · 2D Game Engine</p>
+    </div>
+</footer>
+
+<script src="website_script.js"></script>
+</body>
+</html>
