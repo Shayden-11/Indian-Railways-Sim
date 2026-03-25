@@ -129,11 +129,24 @@ let currentMenuState = 'MAIN';
 let currentConsist = 'Rajdhani', currentLoco = 'WAP7', currentRoute = 'Mumbai - New Delhi';
 let hornSound;
 let routeSelectOpen = false; 
-let startX = 10000; 
+
+// --- STORY MODE ---
+let isStoryMode = false;
+let storyChapter = 0;
+let storyState = 0;
+let storyDelay = 0;
+let dummyRake = null;
+let storyChatBox = null;
+let storyChatTitle = null;
+let storyChatText = null;
+
+let startX = 10000;  
 
 const TRAIN_PARAMS = {
     'Rajdhani': { scale: 0.32, coachSpacing: 350, locoSpacing: 330, lhb: 'lhb_red_ac3', eog: 'eog' },
-    'Shatabdi': { scale: 0.32, coachSpacing: 350, locoSpacing: 330, lhb: 'lhb_blue', eog: 'eog_blue' }
+    'Shatabdi': { scale: 0.32, coachSpacing: 350, locoSpacing: 330, lhb: 'lhb_blue_acc', eog: 'eog_blue' },
+    'Humsafar': { scale: 0.32, coachSpacing: 350, locoSpacing: 330, lhb: 'lhb_humsafar_ac3', eog: 'humsafar_eog' },
+    'GreyShatabdi': { scale: 0.32, coachSpacing: 350, locoSpacing: 330, lhb: 'lhb_shatabdi_grey_acc', eog: 'shatabdi_grey_eog' }
 };
 
 const COACH_CATALOGUE = [
@@ -379,6 +392,8 @@ function create() {
 function update(time, delta) {
     cameraDolly.x = train.x + relativeX; cameraDolly.y = train.y;
     if (isPaused || routeSelectOpen) return;
+
+    if (isStoryMode) updateStoryMode(delta);
 
     let now = new Date();
     let hh = now.getHours(), mm = now.getMinutes(), ss = now.getSeconds();
@@ -1016,11 +1031,13 @@ function updateUpcomingSignalNav() {
 }
 
 function spawnNpcTrain(direction) {
-    const consists = ['Rajdhani', 'Shatabdi'];
+    const consists = ['Rajdhani', 'Shatabdi', 'Humsafar', 'GreyShatabdi'];
     const locos = ['wap7', 'wap5'];
     let npcConsist = consists[Math.floor(Math.random() * consists.length)];
     let npcLoco   = locos[Math.floor(Math.random() * locos.length)];
     let params    = TRAIN_PARAMS[npcConsist];
+    
+    let totalUnits = (npcConsist === 'Rajdhani' || npcConsist === 'Humsafar') ? 24 : 12;
 
     let spawnX, npcSpeed;
     let trackY = TRACK_Y;
@@ -1045,8 +1062,8 @@ function spawnNpcTrain(direction) {
     if (direction === -1) locoSprite.setFlipX(true);
 
     let coachSprites = [];
-    for (let i = 0; i < TOTAL_UNITS; i++) {
-        let tex = (i === 0 || i === TOTAL_UNITS - 1) ? params.eog : params.lhb;
+    for (let i = 0; i < totalUnits; i++) {
+        let tex = (i === 0 || i === totalUnits - 1) ? params.eog : params.lhb;
         let cx = (direction === -1)
             ? spawnX + params.locoSpacing + i * params.coachSpacing
             : spawnX - params.locoSpacing - i * params.coachSpacing;
@@ -1179,9 +1196,10 @@ function updateTrainRake(scene) {
         coachKeys = customConsist;
     } else {
         let params = TRAIN_PARAMS[currentConsist];
+        let totalUnits = (currentConsist === 'Rajdhani' || currentConsist === 'Humsafar') ? 24 : 12;
         coachKeys = [];
-        for (let i = 1; i <= TOTAL_UNITS; i++) {
-            coachKeys.push((i === 1 || i === TOTAL_UNITS) ? params.eog : params.lhb);
+        for (let i = 1; i <= totalUnits; i++) {
+            coachKeys.push((i === 1 || i === totalUnits) ? params.eog : params.lhb);
         }
     }
 
@@ -1228,9 +1246,11 @@ function refreshMenuButtons(scene) {
         createMenuBtn(380, "SELECT LOCO", 0xf39c12, () => { currentMenuState = 'SELECT_LOCO'; refreshMenuButtons(scene); });
         createMenuBtn(500, "BACK", 0xc0392b, () => { currentMenuState = 'MAIN'; refreshMenuButtons(scene); });
     } else if (currentMenuState === 'TRAIN_SET') {
-        createMenuBtn(280, "RAJDHANI", 0xc0392b, () => { currentConsist = 'Rajdhani'; updateTrainRake(scene); });
-        createMenuBtn(380, "SHATABDI", 0x2980b9, () => { currentConsist = 'Shatabdi'; updateTrainRake(scene); });
-        createMenuBtn(500, "BACK", 0x7f8c8d, () => { currentMenuState = 'MAIN'; refreshMenuButtons(scene); });
+        createMenuBtn(250, "RAJDHANI  (24 Coaches)", 0xc0392b, () => { customConsist = null; currentConsist = 'Rajdhani'; updateTrainRake(scene); });
+        createMenuBtn(320, "HUMSAFAR  (24 Coaches)", 0x8A3A0B, () => { customConsist = null; currentConsist = 'Humsafar'; updateTrainRake(scene); });
+        createMenuBtn(390, "SHATABDI  (12 Coaches)", 0x2980b9, () => { customConsist = null; currentConsist = 'Shatabdi'; updateTrainRake(scene); });
+        createMenuBtn(460, "GREY SHATABDI (12 Coaches)", 0x7F8C8D, () => { customConsist = null; currentConsist = 'GreyShatabdi'; updateTrainRake(scene); });
+        createMenuBtn(540, "BACK", 0xe74c3c, () => { currentMenuState = 'MAIN'; refreshMenuButtons(scene); });
     } else if (currentMenuState === 'SELECT_LOCO') {
         createMenuBtn(280, "WAP-7  (130 km/h)", 0x2c3e50, () => { 
             currentLoco = 'WAP7'; 
@@ -1767,6 +1787,176 @@ function loadProgress() {
     } catch(e) { return null; }
 }
 
+function showStoryChapterSelector(scene, g, deco) {
+    g.clear(true, true);
+    if (deco && deco.active) deco.destroy();
+    
+    // Create new background for the chapter selector
+    const D = DEPTH_MENU + 20;
+    g.add(scene.add.rectangle(600, 400, 1200, 800, 0x000000, 0.97).setScrollFactor(0).setDepth(D));
+    let newDeco = scene.add.graphics().setScrollFactor(0).setDepth(D + 1);
+    newDeco.lineStyle(1, 0xFF6B00, 0.08);
+    for (let y = 0; y < 800; y += 40) newDeco.strokeLineShape(new Phaser.Geom.Line(0, y, 1200, y));
+    g.add(newDeco);
+
+    g.add(scene.add.text(600, 100, 'STORY MODE: CHAPTERS', { fontSize: '24px', fill: '#FFD700', fontWeight: 'bold', fontFamily: 'monospace' }).setOrigin(0.5).setScrollFactor(0).setDepth(D + 2));
+    
+    let ch1Btn = scene.add.rectangle(600, 200, 500, 60, 0x27ae60)
+        .setInteractive({ useHandCursor: true }).setScrollFactor(0).setDepth(D + 2)
+        .setStrokeStyle(2, 0x2ecc71);
+    let ch1Txt = scene.add.text(600, 200, 'Chapter 1: The Tutorial', { fontSize: '18px', fill: '#fff', fontWeight: 'bold', fontFamily: 'monospace' }).setOrigin(0.5).setScrollFactor(0).setDepth(D + 3);
+    ch1Btn.on('pointerover', () => ch1Btn.setFillStyle(0x2ecc71));
+    ch1Btn.on('pointerout',  () => ch1Btn.setFillStyle(0x27ae60));
+    ch1Btn.on('pointerdown', () => startTutorialChapter(scene, g, newDeco));
+    g.add(ch1Btn); g.add(ch1Txt);
+    
+    let backBtn = scene.add.rectangle(600, 300, 200, 40, 0xc0392b)
+        .setInteractive({ useHandCursor: true }).setScrollFactor(0).setDepth(D + 2);
+    let backTxt = scene.add.text(600, 300, 'BACK', { fontSize: '14px', fill: '#fff', fontWeight: 'bold', fontFamily: 'monospace' }).setOrigin(0.5).setScrollFactor(0).setDepth(D + 3);
+    backBtn.on('pointerdown', () => { g.clear(true, true); if(newDeco && newDeco.active) newDeco.destroy(); showRouteSelector(scene); });
+    g.add(backBtn); g.add(backTxt);
+}
+
+function startTutorialChapter(scene, g, deco) {
+    g.getChildren().forEach(c => c.destroy()); g.clear(true, true); deco.destroy();
+    routeSelectOpen = false;
+
+    isStoryMode = true;
+    storyChapter = 1;
+    storyState = 0;
+    storyDelay = 0;
+
+    let chosenKey = 'New Delhi - Mumbai';
+    let rt = ROUTES[chosenKey];
+    currentRoute   = chosenKey;
+    stationNames   = rt.stations;
+    routeDistances = rt.distances;
+    
+    stationIndex = 0; 
+    nextStationDist = routeDistances[1];
+    currentStationName = stationNames[0];
+    train.setFlipX(false);
+    
+    saveProgress(chosenKey, stationIndex, nextStationDist);
+
+    stationLabel.setText(currentStationName);
+    distanceLabel.setText(Math.floor(nextStationDist) + 'm');
+    
+    // Setup for tutorial
+    let spawnX = startX - 8700;
+    currentStationGroup = spawnStation(scene, spawnX, stationNames[0]);
+    spawnSignal(scene, startX + 800, 0xff0000, true);
+    signalNavCircle.setFillStyle(0xff0000);
+    upcomingSignalColor = 0xff0000;
+
+    // Train starts purely as WAP-7 outside the station
+    customConsist = [];
+    currentLoco = 'WAP7';
+    let locoEntry = LOCO_CATALOGUE.find(l => l.key === 'WAP7');
+    if (locoEntry) { maxSpeed = 25; locoMaxKmh = locoEntry.maxKmh || 130; }
+    speedLimitText.setText(locoMaxKmh + ' km/h');
+    
+    train.x = startX - 2500;
+    train.y = TRACK_Y;
+    train.setVelocityX(0);
+    updateTrainRake(scene);
+
+    // Spawn the dummy rajdhani rake at the platform
+    dummyRake = scene.add.group();
+    let coachKeys = ['eog'];
+    for(let i=0; i<18; i++) coachKeys.push('lhb_red_ac3');
+    coachKeys.push('eog');
+    let cx = startX;
+    coachKeys.forEach(k => {
+        dummyRake.add(scene.add.sprite(cx, TRACK_Y, k).setScale(0.32).setDepth(20).setOrigin(0.5, 1));
+        cx -= 350;
+    });
+
+    relativeX = 300;
+    cameraDolly.x = train.x + relativeX;
+    cameraDolly.y = TRACK_Y;
+
+    isAtStation = true; 
+    stationWaitTimer = -999999; // Disable normal departure
+    scene.physics.resume();
+}
+
+function updateStoryMode(delta) {
+    if (storyChapter === 1) {
+        if (storyState === 0) {
+            showStoryMessage(gameScene, "TUTORIAL", "Welcome Loco Pilot! You are assigned to the Rajdhani Express today.\n\nYour WAP-7 is parked outside New Delhi station. Use the UP ARROW key to gently accelerate towards the platform.");
+            storyState = 1;
+        } else if (storyState === 1) {
+            if (speed > 1) {
+                showStoryMessage(gameScene, "TUTORIAL", "Great! Keep your speed under 15 km/h. Approach the red Rajdhani coaches parked at the platform ahead and gently collide to couple with them.");
+                storyState = 2;
+            }
+        } else if (storyState === 2) {
+            if (dummyRake && dummyRake.getChildren().length > 0) {
+                let firstCoach = dummyRake.getChildren()[0];
+                let dist = firstCoach.x - train.x;
+                if (dist > 0 && dist < 360) {
+                    if (speed > 15) {
+                        showStoryMessage(gameScene, "WARNING", "You coupled too fast! The coupling jerked violently. Watch your speed next time!");
+                    } else {
+                        showStoryMessage(gameScene, "TUTORIAL", "Coupling successful! You are now attached to the Rajdhani rake.\n\nWait for the guard to clear the starter signal to Green.");
+                    }
+                    dummyRake.getChildren().forEach(c => c.destroy());
+                    dummyRake.clear(true, true);
+                    
+                    let newConsist = ['eog'];
+                    for(let i=0; i<18; i++) newConsist.push('lhb_red_ac3');
+                    newConsist.push('eog');
+                    customConsist = newConsist;
+                    updateTrainRake(gameScene);
+                    
+                    storyState = 3;
+                    storyDelay = 0;
+                }
+            }
+        } else if (storyState === 3) {
+            storyDelay += delta;
+            if (storyDelay > 6000) {
+                stationWaitTimer = 15000;
+                storyState = 4;
+            }
+        } else if (storyState === 4) {
+            if (starterSignalReleased) {
+                showStoryMessage(gameScene, "TUTORIAL", "The starter signal is Green! You are cleared for departure.\nYour next stop is KOTA JN.\n\nPress 'E' for Emergency Brake if needed. Press 'Space' to dismiss Guard messages. Good luck!");
+                storyState = 5;
+            }
+        } else if (storyState === 5) {
+            if (isAtStation && currentStationName === 'KOTA JN' && speed < 1) {
+                showStoryMessage(gameScene, "TUTORIAL", "You have successfully arrived at Kota!\n\nTutorial Completed. Returning to the main menu...");
+                storyState = 6;
+                storyDelay = 0;
+            }
+        } else if (storyState === 6) {
+            storyDelay += delta;
+            if (storyDelay > 7000) {
+                if (storyChatBox) { storyChatBox.destroy(); storyChatBox = null; }
+                isStoryMode = false;
+                gameScene.physics.pause();
+                routeSelectOpen = true;
+                showRouteSelector(gameScene);
+            }
+        }
+    }
+}
+
+function showStoryMessage(scene, title, text) {
+    if (!storyChatBox) {
+        storyChatBox = scene.add.container(600, 500).setScrollFactor(0).setDepth(DEPTH_TEXT + 100);
+        let bg = scene.add.rectangle(0, 0, 800, 120, 0x111111, 0.95).setStrokeStyle(3, 0xFF6B00);
+        storyChatTitle = scene.add.text(-380, -45, title, { fontSize: '18px', fill: '#FF6B00', fontWeight: 'bold', fontFamily: 'monospace' });
+        storyChatText = scene.add.text(-380, -15, text, { fontSize: '15px', fill: '#fff', fontFamily: 'monospace', wordWrap: { width: 760 }, lineSpacing: 6 });
+        storyChatBox.add([bg, storyChatTitle, storyChatText]);
+    } else {
+        storyChatTitle.setText(title);
+        storyChatText.setText(text);
+    }
+}
+
 function showRouteSelector(scene) {
     let g = scene.add.group();
     const D = DEPTH_MENU + 20;
@@ -1931,6 +2121,15 @@ function showRouteSelector(scene) {
             g.add(btn); g.add(btnTxt);
         }
     });
+
+    let storyBtn = scene.add.rectangle(600, 560, 360, 50, 0x8e44ad)
+        .setInteractive({ useHandCursor: true }).setScrollFactor(0).setDepth(D + 4)
+        .setStrokeStyle(2, 0x9b59b6);
+    let storyTxt = scene.add.text(600, 560, '📖 STORY MODE: EXPERIENCES', { fontSize: '16px', fill: '#fff', fontWeight: 'bold', fontFamily: 'monospace' }).setOrigin(0.5).setScrollFactor(0).setDepth(D + 5);
+    storyBtn.on('pointerover', () => storyBtn.setFillStyle(0x9b59b6));
+    storyBtn.on('pointerout',  () => storyBtn.setFillStyle(0x8e44ad));
+    storyBtn.on('pointerdown', () => showStoryChapterSelector(scene, g, deco));
+    g.add(storyBtn); g.add(storyTxt);
 
     g.add(scene.add.text(600, 758, 'You can change routes anytime from the menu', { fontSize: '10px', fill: '#333', fontFamily: 'monospace' }).setOrigin(0.5).setScrollFactor(0).setDepth(D + 2));
 }
