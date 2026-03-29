@@ -45,3 +45,9 @@ An immersive, web-based 2D train simulator built with Phaser 3. Command high-hor
 3. Use **Arrow Keys (Up/Down)** for Throttle and Brakes.
 4. Press **'E'** for Emergency Brakes.
 5. Use **Right-Click + Drag** to pan the camera across the train.
+
+---
+
+## How to run the game
+1.Double click the "Play_Game.bat" file and it will show a localhost address.
+2.The address will be copied to your clipboard and you can just paste it in google and play.
